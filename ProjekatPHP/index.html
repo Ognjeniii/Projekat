@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registracija</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.js"></script>
+    <script>
+        $(function(){
+            $('#imeiprezime').on('blur', function(e){
+                let test = /^[A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})$/.test($(this).val());
+                let test1 = /^[A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})$/.test($(this).val());
+                let test2 = /^[A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})[ /-][A-z]([a-z]{1,35})$/.test($(this).val());
+                if(test === true) {
+                    $(this).css('outline', 'solid 3px #0f0');
+                    $('#ImePrezime').hide();
+                }else if (test1 === true) {
+                    $(this).css('outline', 'solid 3px #0f0');
+                    $('#ImePrezime').hide();
+                }else if(test2 === true){
+                    $(this).css('outline', 'solid 3px #0f0');
+                    $('#ImePrezime').hide();
+                } else {
+                    $(this).css('outline', 'solid 3px orange');
+                    $('#ImePrezime').show();
+                }
+                if($('#imeiprezime').val() === ""){
+                    $(this).css('outline', 'none');
+                    $('#ImePrezime').hide();
+                    /* kada se izadje iz polja i polje je prazno, ne treba da ima outline*/
+                }
+            });
+
+            $('#brojtelefona').on('blur', function(e){
+               let test = /^[+][1-9]([0-9]{9,14})$/.test($(this).val());
+               if(test === true){
+                   $(this).css('outline', 'solid 3px #0f0');
+                   $('#divTelefon').hide();
+               }
+               else if($('#brojtelefona').val()===''){
+                    $(this).css('outline', 'none');
+                    $('#divTelefon').hide();
+               }
+               else{
+                   $(this).css('outline', 'solid 3px orange');
+                   $('#divTelefon').show();
+               }
+
+            });
+
+            $('#pass1').on('blur', function(e){
+               let test = /[a-zA-Z0-9 .!"#$%&/()=?+*]{6,150}$/.test($(this).val());
+               //let test = /("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})")/.test($(this).val());
+               if (test === true){
+                   $(this).css('outline', 'solid 3px #0f0');
+                   $('#divPass1').hide();
+               }else{
+                   $(this).css('outline', 'solid 3px orange');
+                   $('#divPass1').show();
+               }
+               //TREBA PONOVO
+            });
+            
+            $('#pass2').on('blur', function(e){
+               if($('#pass2').val() !== $('#pass1').val()){
+                   $(this).css('outline', 'solid 3px orange');
+                   $('#divPass2').show();
+               }else{
+                   $(this).css('outline', 'none');
+                   $('#divPass2').hide();
+               }
+            });
+
+            $('#forma1').on('submit', function(e){
+                e.preventDefault();
+                let val = $('#email').val();
+                if(val === ""){
+                    $('#email').css('outline', 'solid 3px orange');
+                    $('#divEmail').show();
+                }
+            });
+
+            $('#email').on('blur', function(e){
+                $('#email').css('outline', 'none');
+                $('#divEmail').hide();
+            });
+            $('#forma1').on('submit', function(e){
+               e.preventDefault();
+                var form = new FormData();
+                form.append("name", $('#imeiprezime').val());
+                form.append("email", $('#email').val());
+                form.append("phone", $('#brojtelefona').val());
+                form.append("password", $('#pass1').val());
+                form.append("apitoken", "iylMvp5qz1daKqSsCSVGstNxriMgQIMmTQWX4QnJQK8bUffm6k6Qpc6nskVcjPOXcXWpboetZmyWwvKFqoGEAb6nvR");
+
+                var settings = {
+                    "url": "https://vsis.mef.edu.rs/projekat/ulaznice/public_html/api/register",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Accept": "application/json"
+                    },
+                    "processData": false,
+                    "mimeType": "multipart/form-data",
+                    "contentType": false,
+                    "data": form,
+                    'dataType':'json',
+                    'success': function(response){
+                        console.log(response);
+                        if(response.error !== undefined){
+                            $('#greska').html(response.error);
+                            $('#greska').show();
+                            $('#email').val("");
+                        }else{
+                            window.location.assign('PrijaviSe.html');
+                        }
+                    },
+                    'error': function(response){
+                        console.log('error' + response);
+                    }
+                };
+
+                $.ajax(settings);
+
+
+            });
+
+
+
+        });
+    </script>
+</head>
+<body>
+<div id="stil1">
+<div id="stil">
+<form id="forma1">
+    <label>
+        Ime i prezime<br>
+        <input type="text" required id="imeiprezime" placeholder="Unesite ime i prezime:">
+        <div id="ImePrezime" hidden>Ime i prezime nije pravilno napisano</div>
+        <br>
+        <br>
+    </label>
+    <label>
+        Broj telefona<br>
+        <input type="text" id="brojtelefona" placeholder="Ovde uneti broj telefona:">
+        <div id="divTelefon" hidden>Broj telefona nije ispravan</div>
+        <br>
+        <br>
+    </label>
+    <label>
+        Email<br>
+        <input type="email" id="email" placeholder="Ovde uneti e-mail:">
+        <div id="divEmail" hidden >Niste uneli email</div>
+        <br>
+        <br>
+    </label>
+    <label>
+        Lozinka<br>
+        <input type="password" required id="pass1" placeholder="Unesite lozinku:">
+        <div id="divPass1" hidden>Lozinka nije dovoljno jaka</div>
+        <br>
+        <br>
+    </label>
+    <label>
+        Ponovljena lozinka<br>
+        <input type="password" required id="pass2" placeholder="Ovde uneti ponovljenu lozinku:">
+        <div id="divPass2" hidden>Lozinke se ne poklapaju</div>
+        <br>
+        <br>
+    </label>
+    <button id="dugme1">Registruj se</button>
+    <div id="greska" hidden></div>
+</form>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prijava</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $('#forma1').on('submit', function(e){
+                e.preventDefault();
+
+                    let form = new FormData();
+                    form.append("email", $('#email').val());
+                    form.append("password", $('#pass1').val());
+                    form.append("apitoken", "iylMvp5qz1daKqSsCSVGstNxriMgQIMmTQWX4QnJQK8bUffm6k6Qpc6nskVcjPOXcXWpboetZmyWwvKFqoGEAb6nvR");
+
+                     let settings = {
+                     "url": "https://vsis.mef.edu.rs/projekat/ulaznice/public_html/api/login",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Accept": "application/json"
+                    },
+                    "processData": false,
+                    "mimeType": "multipart/form-data",
+                    "contentType": false,
+                    "data": form,
+                    "dataType": "json",
+                    "success": function(response){
+                        console.log(response);
+                        window.localStorage.setItem('token', response.token);
+                        window.localStorage.setItem('type', response.type);
+                        if(response.type === 'администратор'){
+                            window.location.assign('DeoZaAdministratora.html');
+                        }else if(response.type === 'благајник'){
+                            window.location.assign('Blagajnik.html');
+                        }else{
+                            window.location.assign('RegistrovaniKorisnik.html');
+                        }
+                    },
+                    "error":function(response){
+                         console.log(response.responseJSON);
+                        $('#greska1').html(response.responseJSON.error);
+                        $('#pass1').val("");
+                    }
+                    };
+
+                    $.ajax(settings)
+
+                });
+            });
+    </script>
+</head>
+<body>
+<div id="stil1">
+    <div id="stil">
+        <form id="forma1" action="https://vsis.mef.edu.rs/projekat/ulaznice/public_html/api/login" method="post">
+            <label>
+                Email<br>
+                <input type="email" id="email" placeholder="Ovde uneti e-mail:">
+                <div id="divEmail" hidden >Niste uneli email</div>
+                <br>
+                <br>
+            </label>
+            <label>
+                Lozinka<br>
+                <input type="password" required id="pass1" placeholder="Unesite lozinku:">
+                <div id="divPass1" hidden>Lozinka nije dovoljno jaka</div>
+                <br>
+                <br>
+            </label>
+
+            <button id="dugme1">Prijavi se</button>
+            <div id="greska1"></div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

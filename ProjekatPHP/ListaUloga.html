@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista uloga korisnika</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+
+            $('#tabelaDugme').on('click', function(e){
+               window.location.assign('DeoZaAdministratora.html');
+            });
+
+            let settings = {
+                //iylMvp5qz1daKqSsCSVGstNxriMgQIMmTQWX4QnJQK8bUffm6k6Qpc6nskVcjPOXcXWpboetZmyWwvKFqoGEAb6nvR
+                "url": "https://vsis.mef.edu.rs/projekat/ulaznice/public_html/api/uloga?apitoken=iylMvp5qz1daKqSsCSVGstNxriMgQIMmTQWX4QnJQK8bUffm6k6Qpc6nskVcjPOXcXWpboetZmyWwvKFqoGEAb6nvR",
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                response.forEach((element, index) => {
+                    $('table').append('<tr><td>' + element.id + '</td><td>'+ element.naziv + '</td><td>' + element.opis + '</td><td>' + element.id.length + '</td></tr>');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<button id="tabelaDugme">Vrati se nazad</button>
+    <div id="tabela">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Naziv</th>
+                <th>Opis</th>
+                <th>Broj korisnika</th>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deo za Administratora</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+           $('#id1').on('click', function(e){
+               window.location.assign('KreiranjeKorisnika.html');
+           });
+
+           $('#id2').on('click', function(e){
+               window.location.assign('ListaUloga.html');
+           })
+        });
+    </script>
+</head>
+<body>
+    <div id="deoZaAdministratora">
+        <div id="deoZaAdministratora2">
+        <button class="korisnici" id="id1">Kreiranje korisnika</button>
+            <br>
+        <button class="korisnici" id="id2">Lista svih uloga korisnika</button>
+            <br>
+        <button class="korisnici" id="id3">Lista svih korisnika</button>
+            <br>
+        <button class="korisnici" id="id4">Prijava jednog korisnika po id-ju</button>
+            <br>
+        </div>
+    </div>
+</body>
+</html>

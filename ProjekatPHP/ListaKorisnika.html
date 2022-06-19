@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista svih korisnika</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            let settings = {
+                "url": "https://vsis.mef.edu.rs/projekat/ulaznice/public_html/api/korisnik?apitoken=iylMvp5qz1daKqSsCSVGstNxriMgQIMmTQWX4QnJQK8bUffm6k6Qpc6nskVcjPOXcXWpboetZmyWwvKFqoGEAb6nvR",
+                "method": "GET",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

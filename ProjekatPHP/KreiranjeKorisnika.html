@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Napravi blagajnika</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.js"></script>
+    <script>
+        $(function(){
+            $('#imeiprezime').on('blur', function(e){
+                let test = /^[A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})$/.test($(this).val());
+                let test1 = /^[A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})$/.test($(this).val());
+                let test2 = /^[A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})[ /-][A-Z]([a-z]{1,35})[ /-][A-z]([a-z]{1,35})$/.test($(this).val());
+                if(test === true) {
+                    $(this).css('outline', 'solid 3px #0f0');
+                    $('#ImePrezime').hide();
+                }else if (test1 === true) {
+                    $(this).css('outline', 'solid 3px #0f0');
+                    $('#ImePrezime').hide();
+                }else if(test2 === true){
+                    $(this).css('outline', 'solid 3px #0f0');
+                    $('#ImePrezime').hide();
+                } else {
+                    $(this).css('outline', 'solid 3px orange');
+                    $('#ImePrezime').show();
+                }
+                if($('#imeiprezime').val() === ""){
+                    $(this).css('outline', 'none');
+                    $('#ImePrezime').hide();
+                    /* kada se izadje iz polja i polje je prazno, ne treba da ima outline*/
+                }
+            });
+
+            $('#brojtelefona').on('blur', function(e){
+                let test = /^[+][1-9]([0-9]{9,14})$/.test($(this).val());
+                if(test === true){
+                    $(this).css('outline', 'solid 3px #0f0');
+                    $('#divTelefon').hide();
+                }
+                else if($('#brojtelefona').val()===''){
+                    $(this).css('outline', 'none');
+                    $('#divTelefon').hide();
+                }
+                else{
+                    $(this).css('outline', 'solid 3px orange');
+                    $('#divTelefon').show();
+                }
+
+            });
+
+            $('#pass1').on('blur', function(e){
+                let test = /[a-zA-Z0-9 .!"#$%&/()=?+*]{6,150}$/.test($(this).val());
+                //let test = /("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})")/.test($(this).val());
+                if (test === true){
+                    $(this).css('outline', 'solid 3px #0f0');
+                    $('#divPass1').hide();
+                }else{
+                    $(this).css('outline', 'solid 3px orange');
+                    $('#divPass1').show();
+                }
+                //TREBA PONOVO
+            });
+
+            $('#pass2').on('blur', function(e){
+                if($('#pass2').val() !== $('#pass1').val()){
+                    $(this).css('outline', 'solid 3px orange');
+                    $('#divPass2').show();
+                }else{
+                    $(this).css('outline', 'none');
+                    $('#divPass2').hide();
+                }
+            });
+
+            $('#forma1').on('submit', function(e){
+                e.preventDefault();
+                let val = $('#email').val();
+                if(val === ""){
+                    $('#email').css('outline', 'solid 3px orange');
+                    $('#divEmail').show();
+                }
+            });
+
+             $('#uloge').on('click', function(e){
+                 if($('#uloge').val() === $('#blagajnik').val()){
+                     $('#lokacije').show();
+                     console.log('izabran');
+                 }else{
+                     $('#lokacije').hide();
+                 }
+             });
+
+             // $('#uloge').on('click', function(e){
+             //    if($('#uloge').val()===$('#blagajnik').val()) {
+             //        localStorage.setItem('id', '2');
+             //    }else if($('#uloge').val() === $('#administrator').val()){
+             //        localStorage.setItem('id', '1');
+             //    }else{
+             //        localStorage.setItem('id', '3');
+             //    }
+             // });
+
+            // treba da se otkriju lokacije??
+
+            $('#forma1').on('submit', function(e){
+               e.preventDefault();
+                let form = new FormData();
+                form.append("name", $('#imeiprezime').val());
+                form.append("email", $('#email').val());
+                form.append("phone", $('#brojtelefona').val());
+                form.append("password", $('#pass1').val());
+                form.append("userRoleId", parseInt(localStorage.getItem('id')));
+                form.append("locationId", "");
+                form.append("apitoken", "iylMvp5qz1daKqSsCSVGstNxriMgQIMmTQWX4QnJQK8bUffm6k6Qpc6nskVcjPOXcXWpboetZmyWwvKFqoGEAb6nvR");
+
+                let settings = {
+                    "url": "https://vsis.mef.edu.rs/projekat/ulaznice/public_html/api/korisnik",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Accept": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+
+                    },
+                    "processData": false,
+                    "mimeType": "multipart/form-data",
+                    "contentType": false,
+                    "data": form,
+                    'dataType':'json',
+                    'success': function(response){
+                        if(response.error !== undefined){
+                            $('#greska').html(response);
+                            console.log(response);
+                            $('#greska').show();
+                            $('#email').val('');
+                        }else{
+                            console.log(response.uloga.id);
+                            localStorage.setItem('id', response.uloga.id);
+                        }
+                    },
+                    'error': function(response) {
+                        console.log(response);
+                        $('#greska').html(response);
+                        $('#greska').show();
+                        $('#email').val('');
+                    }
+                };
+
+                $.ajax(settings)
+                });
+            });
+    </script>
+</head>
+<body>
+<div id="stil1">
+    <div id="stil">
+        <form id="forma1" action="https://vsis.mef.edu.rs/projekat/ulaznice/public_html/api/korisnik" method="post">
+            <div id="napraviBlagajnika">Napravi osobu</div>
+            <label>
+                Ime i prezime<br>
+                <input type="text" required id="imeiprezime" placeholder="Unesite ime i prezime:">
+            </label>
+                <div id="ImePrezime" hidden>Ime i prezime nije pravilno napisano</div>
+                <br>
+                <br>
+
+            <label>
+                Broj telefona<br>
+                <input type="text" id="brojtelefona" placeholder="Ovde uneti broj telefona:">
+            </label>
+                <div id="divTelefon" hidden>Broj telefona nije ispravan</div>
+                <br>
+                <br>
+
+            <label>
+                Email<br>
+                <input type="email" id="email" placeholder="Ovde uneti e-mail:">
+            </label>
+                <div id="divEmail" hidden >Niste uneli email</div>
+                <br>
+                <br>
+
+            <label>
+                Lozinka<br>
+                <input type="password" required id="pass1" placeholder="Unesite lozinku:">
+            </label>
+                <div id="divPass1" hidden>Lozinka nije dovoljno jaka</div>
+                <br>
+                <br>
+            <label>
+                Ponovljena lozinka<br>
+                <input type="password" required id="pass2" placeholder="Ovde uneti ponovljenu lozinku:">
+                <div id="divPass2" hidden>Lozinke se ne poklapaju</div>
+                <br>
+                <br>
+                <select name="uloge" id="uloge">
+                    <option value="administrator" id="administrator">Administrator</option>
+                    <option value="blagajnik" id="blagajnik">Blagajnik</option>
+                    <option value="registrovaniKorisnik" id="rKorisnik">Registrovani korisnik</option>
+
+                </select>
+                <br>
+                <select name="lokacije" id="lokacije" hidden>
+                    <option value="lokacija1">Beograd</option>
+                    <option value="lokacija2">Novi Sad</option>
+                    <option value="lokacija3">Niš</option>
+                    <option value="lokacija4">Subotica</option>
+                </select>
+                <br>
+            </label>
+            <button id="dugme1">Registruj se</button>
+            <div id="greska" hidden></div>
+            <br>
+        </form>
+    </div>
+</div>
+</body>
+</html>

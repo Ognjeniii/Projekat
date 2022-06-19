@@ -1,0 +1,245 @@
+
+#stil{
+    border:solid 2px #aaa;
+    background-color: #eee;
+    max-width: 500px;
+}
+#stil1{
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+body{
+    margin: 0;
+}
+
+
+@media (max-width: 500px) {
+    #stil1 {
+        align-items: flex-start;
+    }
+}
+/*#stil1
+{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}*/
+#dugme1{
+    width:500px;
+    outline:none;
+    background-color: aquamarine;
+    color: blue;
+}
+#dugme1:active{
+    box-shadow: 2px 3px 5px black;
+}
+#dugme1:focus{
+    box-shadow: 2px 3px 5px black;
+}
+
+#dugme1:hover{
+    background-color: blue;
+    color: aquamarine;
+    box-shadow: -2px -3.5px 5px purple
+}
+
+form>label>input{
+    max-width:492px;
+    width:492px;
+}
+form>label{
+    padding-top: 20px;
+    padding-right: 0;
+}
+#ImePrezime{
+    color: orange;
+}
+#divTelefon{
+    color:orange;
+}
+#divPass1{
+    color:orange;
+}
+#divPass2{
+    color:orange;
+}
+#divEmail{
+    color:orange;
+}
+#stil{
+    padding:20px;
+}
+
+/* Nije prijavljen */
+
+ul{
+    display: block;
+    list-style: none;
+}
+#nijePrijavljen{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border:solid 2px #aaa;
+    background-color: #eee;
+    width: 400px;
+    height: 400px;
+}
+#napraviNoviNalog, #prijaviSe, #lista, #pretraziDogadjaje{
+    height: 40px;
+    width: 320px;
+    background-color: burlywood;
+    color: brown;
+    border: solid 1px brown;
+    font-size:1.03em;
+}
+.unutrasnji{
+    height: 30px;
+    width: 280px;
+    background-color: burlywood;
+    color: brown;
+    border: solid 1px brown;
+}
+#napraviNoviNalog:hover{
+    background-color: #deb900;
+    color: brown;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+#napraviNoviNalog:active{
+    background-color: greenyellow;
+}
+#prijaviSe:hover{
+    background-color: #deb900;
+    color: brown;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+#prijaviSe:active{
+    background-color: greenyellow;
+}
+#lista:hover{
+    background-color: #deb900;
+    color: brown;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+#lista:active{
+    background-color: greenyellow;
+}
+#pretraziDogadjaje:hover{
+    background-color: #deb900;
+    color: brown;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+#pretraziDogadjaje:active{
+    background-color: greenyellow;
+}
+
+
+#servis{
+    color: brown;
+    font-size: 1.8em;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    text-shadow:0px 3px 5px #a52a5a;
+}
+#greska{
+    text-align: center;
+    color:red;
+}
+#greska1{
+    text-align: center;
+    color:red;
+}
+#uloge{
+    width: 500px;
+    background-color: cyan;
+    color: blue;
+    border: solid 2px #000;
+    text-align: center;
+}
+#napraviBlagajnika{
+    text-align: center;
+    text-shadow: 2px 2px 3px black;
+}
+#deoZaAdministratora{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#deoZaAdministratora2{
+    border: solid 2px black;
+    background-color: #aaaaaa;
+    display: block;
+    padding: 20px;
+    box-shadow: 10px 10px #88888888;
+}
+.korisnici{
+    width: 300px;
+    height: 100px;
+    background-color: darkseagreen;
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 1.2em;
+    text-shadow: 3px 3px 3px darkolivegreen;
+}
+#id1:hover{
+    background-color: lightseagreen;
+    transition: 1s;
+}
+
+#id2:hover{
+    background-color: lightseagreen;
+    transition: 1s;
+}
+
+#id3:hover{
+    background-color: lightseagreen;
+    transition: 1s;
+}
+
+#id4:hover{
+    background-color: lightseagreen;
+    transition: 1s;
+}
+table,th,tr,td{
+    border: solid 2px black;
+    border-collapse: collapse;
+    text-align: center;
+    /*font-size: 0.9em;*/
+    width: 900px;
+    height: 100px;
+}
+th{
+    background-color: #aaaaaa;
+}
+td{
+    background-color: darkseagreen;
+}
+#tabela{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#tabelaDugme{
+    width:150px;
+    height:50px;
+    margin-top: 20px;
+    margin-left: 20px;
+    background-color: darkseagreen;
+    text-shadow: 3px 3px 3px darkolivegreen;
+    font-size: 1.1em;
+    font-family: Arial,sans-serif;
+}
+#tabelaDugme:hover{
+    background-color: lightseagreen;
+    transition: 1s;
+}
